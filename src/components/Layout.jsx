@@ -19,7 +19,7 @@ const Layout = ({ children }) => {
     const hoverBg = useColorModeValue('gray.100', 'gray.700')
     
     return (
-      <Link to={to}>
+      <Link to={to} style={{ width: '100%' }}>
         <Flex
           align="center"
           p="4"
@@ -33,8 +33,21 @@ const Layout = ({ children }) => {
             bg: isActive ? activeBg : hoverBg,
           }}
         >
-          {icon}
-          <Text ml="4">{children}</Text>
+          <Box 
+            display="flex" 
+            alignItems="center" 
+            justifyContent="center"
+          >
+            {icon}
+          </Box>
+          <Box
+            ml="4"
+            flex="2"
+            display={isOpen ? "block" : "none"}
+            transition="all 0.3s ease"
+          >
+            {children}
+          </Box>
         </Flex>
       </Link>
     )
@@ -50,14 +63,15 @@ const Layout = ({ children }) => {
         borderColor={borderColor}
         pos="fixed"
         h="100vh"
-        transition="width 0.3s ease"
+        transition="all 0.3s ease"
       >
-        <Flex p="4" alignItems="center" justifyContent="space-between">
+        <Flex p="4" alignItems="center" justifyContent={isOpen ? "space-between" : "center"}>
           {isOpen && <Text fontSize="xl" fontWeight="bold">Menu</Text>}
           <IconButton
             icon={<HamburgerIcon />}
             onClick={() => setIsOpen(!isOpen)}
             variant="ghost"
+            aria-label="Toggle menu"
           />
         </Flex>
         
@@ -73,14 +87,17 @@ const Layout = ({ children }) => {
           <NavItem icon={<InfoIcon />} to="/about">
             About
           </NavItem>
-          <IconButton
-            icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-            onClick={toggleColorMode}
-            variant="ghost"
-            mx="4"
-            w={isOpen ? "auto" : "40px"}
-            aria-label="Toggle dark mode"
-          />
+          <Box px="4">
+            <IconButton
+              icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+              onClick={toggleColorMode}
+              variant="ghost"
+              w="full"
+              display="flex"
+              justifyContent={isOpen ? "flex-start" : "center"}
+              aria-label="Toggle dark mode"
+            />
+          </Box>
         </VStack>
       </Box>
 

@@ -3,9 +3,21 @@ import { useToast } from '@chakra-ui/react';
 
 const NotesContext = createContext();
 
+const STORAGE_KEY = 'sticky_notes_data';
+
 export const NotesProvider = ({ children }) => {
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState(() => {
+    // Load notes from localStorage on initial render
+    const savedNotes = localStorage.getItem(STORAGE_KEY);
+    return savedNotes ? JSON.parse(savedNotes) : [];
+  });
+  
   const toast = useToast();
+
+  // Save notes to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+  }, [notes]);
 
   const addNote = (newNote) => {
     const note = {

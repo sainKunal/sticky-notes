@@ -93,7 +93,7 @@ function NotesList({ notes, onDeleteNote }) {
           boxShadow="xl"
         >
           <Flex gap={4} direction={{ base: 'column', md: 'row' }} w="full">
-            <InputGroup>
+            <InputGroup flex={1}>
               <InputLeftElement pointerEvents="none">
                 <SearchIcon color="gray.400" />
               </InputLeftElement>
@@ -106,7 +106,7 @@ function NotesList({ notes, onDeleteNote }) {
             </InputGroup>
             
             <Menu>
-              <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+              <MenuButton as={Button} rightIcon={<ChevronDownIcon />} whiteSpace="nowrap" minW="160px">
                 {selectedCategory === 'all' ? 'All Categories' : selectedCategory}
               </MenuButton>
               <MenuList>
@@ -121,7 +121,7 @@ function NotesList({ notes, onDeleteNote }) {
 
             <Popover>
               <PopoverTrigger>
-                <Button leftIcon={<CalendarIcon />}>
+                <Button leftIcon={<CalendarIcon />} whiteSpace="nowrap" minW="150px">
                   {format(selectedDate, 'MMM dd, yyyy')}
                 </Button>
               </PopoverTrigger>
